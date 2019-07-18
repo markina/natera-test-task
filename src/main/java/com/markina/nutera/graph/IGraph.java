@@ -5,14 +5,14 @@ import java.util.List;
 /**
  * Created by mmarkina
  */
-public interface IGraph {
-  Graph addVertex(Vertex vertex);
+public interface IGraph<V, E> {
+  Graph addVertex(V vertex);
 
-  Graph addEdge(Vertex from, Vertex to, Edge edge);
+  Graph addEdge(V from, V to, E edge);
 
-  boolean hasVertex(Vertex vertex);
+  boolean hasVertex(V vertex);
 
-  List<Edge> getPath(Vertex from, Vertex to);
+  List<E> getPath(V from, V to);
 
   boolean isDirected();
 }

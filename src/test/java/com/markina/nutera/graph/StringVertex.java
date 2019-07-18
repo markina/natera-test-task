@@ -3,7 +3,7 @@ package com.markina.nutera.graph;
 /**
  * Created by mmarkina
  */
-public class StringVertex extends Vertex {
+public class StringVertex {
   private String name;
 
   public StringVertex(String name) {

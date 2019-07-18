@@ -3,7 +3,7 @@ package com.markina.nutera.graph;
 /**
  * Created by mmarkina
  */
-public class StringEdge extends Edge {
+public class StringEdge {
   private String name;
 
   public StringEdge(String name) {

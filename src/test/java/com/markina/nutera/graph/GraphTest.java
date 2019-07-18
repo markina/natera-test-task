@@ -24,7 +24,8 @@ public class GraphTest {
   public void directedVerticesWithoutEdges() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    Graph graph = new Graph(true)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    graph
       .addVertex(v1)
       .addVertex(v2);
 
@@ -36,7 +37,8 @@ public class GraphTest {
   public void undirectedVerticesWithoutEdges() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    Graph graph = new Graph(false)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    graph
       .addVertex(v1)
       .addVertex(v2);
 
@@ -49,7 +51,7 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
 
-    Graph directedGraph = new Graph(true);
+    Graph<StringVertex, StringEdge> directedGraph = new Graph<>(true);
     directedGraph.getPath(v1, v2);
   }
 
@@ -58,13 +60,13 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
 
-    Graph undirectedGraph = new Graph(true);
+    Graph<StringVertex, StringEdge> undirectedGraph = new Graph<>(true);
     undirectedGraph.getPath(v1, v2);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void directedVertexAlreadyExists() {
-    Graph graph = new Graph(true);
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
     StringVertex v1 = new StringVertex("v1");
     graph.addVertex(v1);
     graph.addVertex(v1);
@@ -72,7 +74,7 @@ public class GraphTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void undirectedVertexAlreadyExists() {
-    Graph graph = new Graph(false);
+    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
     StringVertex v1 = new StringVertex("v1");
     graph.addVertex(v1);
     graph.addVertex(v1);
@@ -83,7 +85,8 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
     StringEdge edgeV1V2 = new StringEdge("e12");
-    Graph graph = new Graph(true)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    graph
       .addVertex(v1)
       .addVertex(v2)
       .addEdge(v1, v2, edgeV1V2);
@@ -97,7 +100,8 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
     StringEdge edgeV1V2 = new StringEdge("e12");
-    Graph graph = new Graph(false)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    graph
       .addVertex(v1)
       .addVertex(v2)
       .addEdge(v1, v2, edgeV1V2);
@@ -113,7 +117,8 @@ public class GraphTest {
     StringVertex v3 = new StringVertex("v3");
     StringEdge edgeV1V2 = new StringEdge("e12");
     StringEdge edgeV2V3 = new StringEdge("e23");
-    Graph graph = new Graph(true)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    graph
       .addVertex(v1)
       .addVertex(v2)
       .addEdge(v1, v2, edgeV1V2)
@@ -135,7 +140,8 @@ public class GraphTest {
     StringVertex v3 = new StringVertex("v3");
     StringEdge edgeV1V2 = new StringEdge("e12");
     StringEdge edgeV2V3 = new StringEdge("e23");
-    Graph graph = new Graph(false)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    graph
       .addVertex(v1)
       .addVertex(v2)
       .addEdge(v1, v2, edgeV1V2)
@@ -153,7 +159,8 @@ public class GraphTest {
   @Test
   public void getPathForSameVertex() {
     StringVertex v1 = new StringVertex("v1");
-    Graph graph = new Graph(true)
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    graph
       .addVertex(v1);
 
     assertEquals("Invalid path", Collections.emptyList(), graph.getPath(v1, v1));
@@ -162,7 +169,7 @@ public class GraphTest {
   @Test
   public void directedBigTest() {
     StringVertex[] vertices = new StringVertex[6];
-    Graph graph = new Graph(true);
+    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
     for (int i = 0; i < 6; i++) {
       vertices[i] = new StringVertex("v" + i);
       graph.addVertex(vertices[i]);
@@ -201,7 +208,7 @@ public class GraphTest {
   @Test
   public void undirectedBigTest() {
     StringVertex[] vertices = new StringVertex[6];
-    Graph graph = new Graph(false);
+    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
     for (int i = 0; i < 6; i++) {
       vertices[i] = new StringVertex("v" + i);
       graph.addVertex(vertices[i]);
