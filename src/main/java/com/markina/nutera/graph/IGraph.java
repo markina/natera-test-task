@@ -6,9 +6,9 @@ import java.util.List;
  * Created by mmarkina
  */
 public interface IGraph<V, E> {
-  Graph addVertex(V vertex);
+  Graph<V, E> addVertex(V vertex);
 
-  Graph addEdge(V from, V to, E edge);
+  Graph<V, E> addEdge(V from, V to, E edge);
 
   boolean hasVertex(V vertex);
 
