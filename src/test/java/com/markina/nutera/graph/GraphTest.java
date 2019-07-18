@@ -24,7 +24,7 @@ public class GraphTest {
   public void directedVerticesWithoutEdges() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     graph
       .addVertex(v1)
       .addVertex(v2);
@@ -37,7 +37,7 @@ public class GraphTest {
   public void undirectedVerticesWithoutEdges() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(false);
     graph
       .addVertex(v1)
       .addVertex(v2);
@@ -51,7 +51,7 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
 
-    Graph<StringVertex, StringEdge> directedGraph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> directedGraph = new Graph<>(true);
     directedGraph.getPath(v1, v2);
   }
 
@@ -60,13 +60,13 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
 
-    Graph<StringVertex, StringEdge> undirectedGraph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> undirectedGraph = new Graph<>(true);
     undirectedGraph.getPath(v1, v2);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void directedVertexAlreadyExists() {
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     StringVertex v1 = new StringVertex("v1");
     graph.addVertex(v1);
     graph.addVertex(v1);
@@ -74,7 +74,7 @@ public class GraphTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void undirectedVertexAlreadyExists() {
-    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(false);
     StringVertex v1 = new StringVertex("v1");
     graph.addVertex(v1);
     graph.addVertex(v1);
@@ -84,12 +84,12 @@ public class GraphTest {
   public void directedSimplePath() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    StringEdge edgeV1V2 = new StringEdge("e12");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    StringEdge<StringVertex> edgeV1V2 = new StringEdge<>(v1, v2, "e12");
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     graph
       .addVertex(v1)
       .addVertex(v2)
-      .addEdge(v1, v2, edgeV1V2);
+      .addEdge(edgeV1V2);
 
     assertEquals("Invalid path", Collections.singletonList(edgeV1V2), graph.getPath(v1, v2));
     assertNull("Path doesn't exists", graph.getPath(v2, v1));
@@ -99,12 +99,12 @@ public class GraphTest {
   public void undirectedSimplePath() {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
-    StringEdge edgeV1V2 = new StringEdge("e12");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    StringEdge<StringVertex> edgeV1V2 = new StringEdge<>(v1, v2, "e12");
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(false);
     graph
       .addVertex(v1)
       .addVertex(v2)
-      .addEdge(v1, v2, edgeV1V2);
+      .addEdge(edgeV1V2);
 
     assertEquals("Invalid path", Collections.singletonList(edgeV1V2), graph.getPath(v1, v2));
     assertEquals("Invalid path", Collections.singletonList(edgeV1V2), graph.getPath(v1, v2));
@@ -115,15 +115,15 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
     StringVertex v3 = new StringVertex("v3");
-    StringEdge edgeV1V2 = new StringEdge("e12");
-    StringEdge edgeV2V3 = new StringEdge("e23");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    StringEdge<StringVertex> edgeV1V2 = new StringEdge<>(v1, v2, "e12");
+    StringEdge<StringVertex> edgeV2V3 = new StringEdge<>(v2, v3, "e23");
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     graph
       .addVertex(v1)
       .addVertex(v2)
-      .addEdge(v1, v2, edgeV1V2)
+      .addEdge(edgeV1V2)
       .addVertex(v3)
-      .addEdge(v2, v3, edgeV2V3);
+      .addEdge(edgeV2V3);
 
     assertEquals("Invalid path", Collections.singletonList(edgeV1V2), graph.getPath(v1, v2));
     assertEquals("Invalid path", Collections.singletonList(edgeV2V3), graph.getPath(v2, v3));
@@ -138,15 +138,15 @@ public class GraphTest {
     StringVertex v1 = new StringVertex("v1");
     StringVertex v2 = new StringVertex("v2");
     StringVertex v3 = new StringVertex("v3");
-    StringEdge edgeV1V2 = new StringEdge("e12");
-    StringEdge edgeV2V3 = new StringEdge("e23");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    StringEdge<StringVertex> edgeV1V2 = new StringEdge<>(v1, v2, "e12");
+    StringEdge<StringVertex> edgeV2V3 = new StringEdge<>(v2, v3, "e23");
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(false);
     graph
       .addVertex(v1)
       .addVertex(v2)
-      .addEdge(v1, v2, edgeV1V2)
+      .addEdge(edgeV1V2)
       .addVertex(v3)
-      .addEdge(v2, v3, edgeV2V3);
+      .addEdge(edgeV2V3);
 
     assertEquals("Invalid path", Collections.singletonList(edgeV1V2), graph.getPath(v1, v2));
     assertEquals("Invalid path", Collections.singletonList(edgeV2V3), graph.getPath(v2, v3));
@@ -159,7 +159,7 @@ public class GraphTest {
   @Test
   public void getPathForSameVertex() {
     StringVertex v1 = new StringVertex("v1");
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     graph
       .addVertex(v1);
 
@@ -169,29 +169,29 @@ public class GraphTest {
   @Test
   public void directedBigTest() {
     StringVertex[] vertices = new StringVertex[6];
-    Graph<StringVertex, StringEdge> graph = new Graph<>(true);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(true);
     for (int i = 0; i < 6; i++) {
       vertices[i] = new StringVertex("v" + i);
       graph.addVertex(vertices[i]);
     }
-    StringEdge e01 = new StringEdge("e01");
-    StringEdge e12 = new StringEdge("e12");
-    StringEdge e23 = new StringEdge("e23");
-    StringEdge e34 = new StringEdge("e34");
-    StringEdge e43 = new StringEdge("e43");
-    StringEdge e41 = new StringEdge("e41");
-    StringEdge e52 = new StringEdge("e52");
-    StringEdge e53 = new StringEdge("e53");
+    StringEdge<StringVertex> e01 = new StringEdge<>(vertices[0], vertices[1], "e01");
+    StringEdge<StringVertex> e12 = new StringEdge<>(vertices[1], vertices[2], "e12");
+    StringEdge<StringVertex> e23 = new StringEdge<>(vertices[2], vertices[3], "e23");
+    StringEdge<StringVertex> e34 = new StringEdge<>(vertices[3], vertices[4], "e34");
+    StringEdge<StringVertex> e43 = new StringEdge<>(vertices[4], vertices[3], "e43");
+    StringEdge<StringVertex> e41 = new StringEdge<>(vertices[4], vertices[1], "e41");
+    StringEdge<StringVertex> e52 = new StringEdge<>(vertices[5], vertices[2], "e52");
+    StringEdge<StringVertex> e53 = new StringEdge<>(vertices[5], vertices[3], "e53");
 
     graph
-      .addEdge(vertices[0], vertices[1], e01)
-      .addEdge(vertices[1], vertices[2], e12)
-      .addEdge(vertices[2], vertices[3], e23)
-      .addEdge(vertices[3], vertices[4], e34)
-      .addEdge(vertices[4], vertices[3], e43)
-      .addEdge(vertices[4], vertices[1], e41)
-      .addEdge(vertices[5], vertices[2], e52)
-      .addEdge(vertices[5], vertices[3], e53);
+      .addEdge(e01)
+      .addEdge(e12)
+      .addEdge(e23)
+      .addEdge(e34)
+      .addEdge(e43)
+      .addEdge(e41)
+      .addEdge(e52)
+      .addEdge(e53);
 
     assertEquals("Invalid path", Arrays.asList(e01, e12), graph.getPath(vertices[0], vertices[2]));
     assertEquals("Invalid path", Arrays.asList(e01, e12, e23), graph.getPath(vertices[0], vertices[3]));
@@ -208,27 +208,27 @@ public class GraphTest {
   @Test
   public void undirectedBigTest() {
     StringVertex[] vertices = new StringVertex[6];
-    Graph<StringVertex, StringEdge> graph = new Graph<>(false);
+    Graph<StringVertex, StringEdge<StringVertex>> graph = new Graph<>(false);
     for (int i = 0; i < 6; i++) {
       vertices[i] = new StringVertex("v" + i);
       graph.addVertex(vertices[i]);
     }
-    StringEdge e01 = new StringEdge("e01");
-    StringEdge e12 = new StringEdge("e12");
-    StringEdge e23 = new StringEdge("e23");
-    StringEdge e34 = new StringEdge("e34");
-    StringEdge e14 = new StringEdge("e14");
-    StringEdge e25 = new StringEdge("e25");
-    StringEdge e35 = new StringEdge("e35");
+    StringEdge<StringVertex> e01 = new StringEdge<>(vertices[0], vertices[1], "e01");
+    StringEdge<StringVertex> e12 = new StringEdge<>(vertices[1], vertices[2], "e12");
+    StringEdge<StringVertex> e23 = new StringEdge<>(vertices[2], vertices[3], "e23");
+    StringEdge<StringVertex> e34 = new StringEdge<>(vertices[3], vertices[4], "e34");
+    StringEdge<StringVertex> e14 = new StringEdge<>(vertices[1], vertices[4], "e14");
+    StringEdge<StringVertex> e25 = new StringEdge<>(vertices[2], vertices[5], "e25");
+    StringEdge<StringVertex> e35 = new StringEdge<>(vertices[3], vertices[5], "e35");
 
     graph
-      .addEdge(vertices[0], vertices[1], e01)
-      .addEdge(vertices[1], vertices[2], e12)
-      .addEdge(vertices[2], vertices[3], e23)
-      .addEdge(vertices[3], vertices[4], e34)
-      .addEdge(vertices[4], vertices[1], e14)
-      .addEdge(vertices[5], vertices[2], e25)
-      .addEdge(vertices[5], vertices[3], e35);
+      .addEdge(e01)
+      .addEdge(e12)
+      .addEdge(e23)
+      .addEdge(e34)
+      .addEdge(e14)
+      .addEdge(e25)
+      .addEdge(e35);
 
     assertEquals("Invalid path", Arrays.asList(e01, e12), graph.getPath(vertices[0], vertices[2]));
     assertTrue("Invalid path", Arrays.asList(e01, e12, e23).equals(graph.getPath(vertices[0], vertices[3]))
@@ -237,5 +237,19 @@ public class GraphTest {
     assertEquals("Invalid path", Collections.singletonList(e14), graph.getPath(vertices[1], vertices[4]));
     assertEquals("Invalid path", Arrays.asList(e25, e12), graph.getPath(vertices[5], vertices[1]));
     assertEquals("Invalid path", Arrays.asList(e25, e12, e01), graph.getPath(vertices[5], vertices[0]));
+  }
+
+  @Test
+  public void simpleEdge() {
+    StringVertex v1 = new StringVertex("v1");
+    StringVertex v2 = new StringVertex("v2");
+
+    Edge<StringVertex> edge = new Edge<>(v1, v2);
+    Graph<StringVertex, Edge<StringVertex>> graph = new Graph<StringVertex, Edge<StringVertex>>(true)
+      .addVertex(v1)
+      .addVertex(v2)
+      .addEdge(edge);
+
+    assertEquals("Invalid path", Collections.singletonList(edge), graph.getPath(v1, v2));
   }
 }

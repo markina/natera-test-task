@@ -5,10 +5,10 @@ import java.util.List;
 /**
  * Created by mmarkina
  */
-public interface IGraph<V, E> {
+public interface IGraph<V, E extends Edge<V>> {
   Graph<V, E> addVertex(V vertex);
 
-  Graph<V, E> addEdge(V from, V to, E edge);
+  Graph<V, E> addEdge(E edge);
 
   boolean hasVertex(V vertex);
 

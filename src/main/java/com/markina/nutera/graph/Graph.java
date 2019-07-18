@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by mmarkina
  */
-public class Graph<V, E> implements IGraph<V, E> {
+public class Graph<V, E extends Edge<V>> implements IGraph<V, E> {
   private final boolean directed;
   private final Map<V, Map<V, E>> vertices = new IdentityHashMap<>();
 
@@ -14,12 +14,15 @@ public class Graph<V, E> implements IGraph<V, E> {
   }
 
   @Override
-  public Graph<V, E> addEdge(V vertexFrom, V vertexTo, E edge) {
+  public Graph<V, E> addEdge(E edge) {
+    V from = edge.getFrom();
+    V to = edge.getTo();
+
     if (isDirected()) {
-      addDirectedEdge(vertexFrom, vertexTo, edge);
+      addDirectedEdge(from, to, edge);
     } else {
-      addDirectedEdge(vertexFrom, vertexTo, edge);
-      addDirectedEdge(vertexTo, vertexFrom, edge);
+      addDirectedEdge(from, to, edge);
+      addDirectedEdge(to, from, edge);
     }
     return this;
   }
